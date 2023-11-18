@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
-import snakeCaseToTitleCase from '../utils/TitleCase';
+import snakeCaseToTitleCase from '../utils/titleCase';
 import '../styles/Table.css';
 
 function Table() {
