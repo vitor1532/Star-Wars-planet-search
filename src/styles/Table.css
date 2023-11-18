@@ -1,17 +1,17 @@
 table {
-  max-width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
   font-size: 0.8em;
+  margin-bottom: 20px;
+  max-width: 100%;
 }
 
 th, td {
+  border: 1px solid #ddd;
   padding: 10px;
   text-align: left;
-  border: 1px solid #ddd;
 }
 
-tr:nth-child(even) {
+tr:nth-child( even ) {
   background-color: #f2f2f2;
 }
 
