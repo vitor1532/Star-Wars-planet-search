@@ -14,11 +14,20 @@ export type Planet = {
   edited: string,
   url: string
 };
+export type NumericFilter = {
+  column: string,
+  comparison: string,
+  value: string,
+};
 
 export type PlanetsContextType = {
   allPlanets: Planet[],
   filteredPlanets: Planet[],
+  columnsToUse: string[] | [],
+  filterByNumericValues: NumericFilter[],
   setFilteredPlanets: (planets: Planet[]) => void,
+  setColumnsToUse: (column: string[]) => void,
+  setFilterByNumericValues: (filter: NumericFilter[]) => void,
 };
 
 export type ReactChangeEvent = React.

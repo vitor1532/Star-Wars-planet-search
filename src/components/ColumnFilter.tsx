@@ -1,23 +1,19 @@
 import { useContext, useState } from 'react';
-import { ReactChangeEvent } from '../types';
+import { NumericFilter, ReactChangeEvent } from '../types';
 import PlanetsContext from '../context/PlanetsContext';
-import snakeCaseToTitleCase from '../utils/titleCase';
-import titleCaseToSnakeCase from '../utils/snakeCase';
-
-// population, orbital_period, diameter, rotation_period e surface_water
-const columns = [
-  'population',
-  'orbital_period',
-  'diameter',
-  'rotation_period',
-  'surface_water',
-];
 
 const comparisons = ['maior que', 'menor que', 'igual a'];
 
 function ColumnFilter() {
-  const { filteredPlanets, setFilteredPlanets } = useContext(PlanetsContext);
-  const [formInfo, setFormInfo] = useState({
+  const {
+    filteredPlanets,
+    columnsToUse,
+    filterByNumericValues,
+    setFilteredPlanets,
+    setColumnsToUse,
+    setFilterByNumericValues,
+  } = useContext(PlanetsContext);
+  const [formInfo, setFormInfo] = useState<NumericFilter>({
     column: 'population',
     comparison: 'maior que',
     value: '0',
@@ -25,21 +21,18 @@ function ColumnFilter() {
 
   function handleChange(event: ReactChangeEvent) {
     const { id, value } = event.target;
-    // if (id === 'column') {
-    //   setFormInfo({
-    //     ...formInfo,
-    //     column: titleCaseToSnakeCase(value),
-    //   });
-    // } else {
+
     setFormInfo({
       ...formInfo,
       [id]: value,
     });
-    // }
   }
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const { column, comparison, value } = formInfo;
+
+    setFilterByNumericValues([...filterByNumericValues, formInfo]);
+
     switch (comparison) {
       case 'maior que':
         setFilteredPlanets(
@@ -76,7 +69,7 @@ function ColumnFilter() {
         onChange={ handleChange }
         data-testid="column-filter"
       >
-        {columns.map((key) => (
+        {columnsToUse.map((key) => (
           <option key={ key }>{ key }</option>
         ))}
       </select>

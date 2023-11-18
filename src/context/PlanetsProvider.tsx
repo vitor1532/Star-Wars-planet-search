@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Planet } from '../types';
+import { NumericFilter, Planet } from '../types';
 import { fetchPlanets } from '../apis/StarWarsApi';
 import PlanetsContext from './PlanetsContext';
 
@@ -7,9 +7,19 @@ type PlanetsProviderProps = {
   children: React.ReactNode;
 };
 
+const columns = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
 function PlanetsProvider({ children }: PlanetsProviderProps) {
   const [allPlanets, setAllPlanets] = useState<Planet[]>([]);
   const [filteredPlanets, setFilteredPlanets] = useState<Planet[]>([]);
+  const [columnsToUse, setColumnsToUse] = useState<string[]>(columns);
+  const [filterByNumericValues, setFilterByNumericValues] = useState<NumericFilter[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,7 +30,15 @@ function PlanetsProvider({ children }: PlanetsProviderProps) {
     fetchData();
   }, []);
 
-  const context = { allPlanets, filteredPlanets, setFilteredPlanets };
+  const context = {
+    allPlanets,
+    filteredPlanets,
+    columnsToUse,
+    filterByNumericValues,
+    setFilteredPlanets,
+    setColumnsToUse,
+    setFilterByNumericValues,
+  };
 
   return (
     <PlanetsContext.Provider value={ context }>
