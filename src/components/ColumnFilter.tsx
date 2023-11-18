@@ -16,6 +16,7 @@ function ColumnFilter() {
     filterByNumericValues,
     setColumnsToUse,
     setFilterByNumericValues,
+    setOperation,
   } = useContext(PlanetsContext);
   const [formInfo, setFormInfo] = useState<NumericFilter>(INITIAL_FORM);
 
@@ -34,12 +35,10 @@ function ColumnFilter() {
       ...formInfo,
       [id]: value,
     });
-
-    console.log(formInfo);
   }
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
+    setOperation('addFilter');
     const columnExists = filterByNumericValues.some(
       (filter) => filter.column === formInfo.column,
     );

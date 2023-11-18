@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { NumericFilter, Planet } from '../types';
+import { NumericFilter, OperationType, Planet } from '../types';
 import { fetchPlanets } from '../apis/StarWarsApi';
 import PlanetsContext from './PlanetsContext';
 
@@ -20,6 +20,7 @@ function PlanetsProvider({ children }: PlanetsProviderProps) {
   const [filteredPlanets, setFilteredPlanets] = useState<Planet[]>([]);
   const [columnsToUse, setColumnsToUse] = useState<string[]>(columns);
   const [filterByNumericValues, setFilterByNumericValues] = useState<NumericFilter[]>([]);
+  const [operation, setOperation] = useState<OperationType>('addFilter');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,9 +55,30 @@ function PlanetsProvider({ children }: PlanetsProviderProps) {
   };
 
   useEffect(() => {
-    if (filterByNumericValues.length === 0) return;
-    setNumericFilter(filterByNumericValues[filterByNumericValues.length - 1]);
+    if (filterByNumericValues.length === 0) {
+      setFilteredPlanets(allPlanets);
+      setColumnsToUse(columns);
+      return;
+    }
+    if (operation === 'addFilter') {
+      setNumericFilter(filterByNumericValues[filterByNumericValues.length - 1]);
+    } else {
+      setFilteredPlanets(allPlanets);
+      filterByNumericValues.forEach((filter) => {
+        setNumericFilter(filter);
+      });
+    }
   }, [filterByNumericValues]);
+
+  const removeNumericFilter = (filterToRemove: NumericFilter) => {
+    setFilterByNumericValues(
+      (prevFilterByNumericValues) => prevFilterByNumericValues.filter(
+        (filter) => filter.column !== filterToRemove.column
+          || filter.comparison !== filterToRemove.comparison
+          || filter.value !== filterToRemove.value,
+      ),
+    );
+  };
 
   const context = {
     allPlanets,
@@ -67,6 +89,8 @@ function PlanetsProvider({ children }: PlanetsProviderProps) {
     setColumnsToUse,
     setFilterByNumericValues,
     setNumericFilter,
+    removeNumericFilter,
+    setOperation,
   };
 
   return (

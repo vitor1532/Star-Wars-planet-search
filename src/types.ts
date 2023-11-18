@@ -20,6 +20,8 @@ export type NumericFilter = {
   value: string,
 };
 
+export type OperationType = 'addFilter' | 'removeFilter';
+
 export type PlanetsContextType = {
   allPlanets: Planet[],
   filteredPlanets: Planet[],
@@ -29,6 +31,8 @@ export type PlanetsContextType = {
   setColumnsToUse: (column: string[]) => void,
   setFilterByNumericValues: (filter: NumericFilter[]) => void,
   setNumericFilter: (filter: NumericFilter) => void,
+  removeNumericFilter: (filterToRemove: NumericFilter) => void,
+  setOperation: (operation: OperationType) => void,
 };
 
 export type ReactChangeEvent = React.
