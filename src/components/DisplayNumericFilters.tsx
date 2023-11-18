@@ -4,7 +4,10 @@ import snakeCaseToTitleCase from '../utils/titleCase';
 import { NumericFilter } from '../types';
 
 function DisplayNumericFilters() {
-  const { filterByNumericValues,
+  const { allPlanets,
+    filterByNumericValues,
+    setFilteredPlanets,
+    setFilterByNumericValues,
     removeNumericFilter,
     setOperation,
   } = useContext(PlanetsContext);
@@ -12,6 +15,11 @@ function DisplayNumericFilters() {
   const handleRemoveFilter = (filterToRemove: NumericFilter) => {
     setOperation('removeFilter');
     removeNumericFilter(filterToRemove);
+  };
+
+  const resetFilters = () => {
+    setFilteredPlanets(allPlanets);
+    setFilterByNumericValues([]);
   };
 
   return (
@@ -22,6 +30,12 @@ function DisplayNumericFilters() {
           <button onClick={ () => handleRemoveFilter(filter) }>x</button>
         </div>
       ))}
+      <button
+        onClick={ resetFilters }
+        data-testid="button-remove-filters"
+      >
+        Remover Filtros
+      </button>
     </>
   );
 }
