@@ -28,6 +28,7 @@ export type PlanetsContextType = {
   setFilteredPlanets: (planets: Planet[]) => void,
   setColumnsToUse: (column: string[]) => void,
   setFilterByNumericValues: (filter: NumericFilter[]) => void,
+  setNumericFilter: (filter: NumericFilter) => void,
 };
 
 export type ReactChangeEvent = React.

@@ -6,11 +6,11 @@ const comparisons = ['maior que', 'menor que', 'igual a'];
 
 function ColumnFilter() {
   const {
-    filteredPlanets,
+    // filteredPlanets,
     columnsToUse,
     filterByNumericValues,
-    setFilteredPlanets,
-    setColumnsToUse,
+    // setFilteredPlanets,
+    // setColumnsToUse,
     setFilterByNumericValues,
   } = useContext(PlanetsContext);
   const [formInfo, setFormInfo] = useState<NumericFilter>({
@@ -29,35 +29,8 @@ function ColumnFilter() {
   }
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const { column, comparison, value } = formInfo;
 
     setFilterByNumericValues([...filterByNumericValues, formInfo]);
-
-    switch (comparison) {
-      case 'maior que':
-        setFilteredPlanets(
-          filteredPlanets.filter(
-            (planet: any) => Number(planet[column]) > Number(value),
-          ),
-        );
-        break;
-      case 'menor que':
-        setFilteredPlanets(
-          filteredPlanets.filter(
-            (planet: any) => Number(planet[column]) < Number(value),
-          ),
-        );
-        break;
-      case 'igual a':
-        setFilteredPlanets(
-          filteredPlanets.filter(
-            (planet: any) => Number(planet[column]) === Number(value),
-          ),
-        );
-        break;
-      default:
-        break;
-    }
   }
 
   return (

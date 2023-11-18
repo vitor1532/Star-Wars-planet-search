@@ -30,6 +30,41 @@ function PlanetsProvider({ children }: PlanetsProviderProps) {
     fetchData();
   }, []);
 
+  const setNumericFilter = (filter: NumericFilter) => {
+    const { column, comparison, value } = filter;
+
+    switch (comparison) {
+      case 'maior que':
+        setFilteredPlanets(
+          filteredPlanets.filter(
+            (planet: any) => Number(planet[column]) > Number(value),
+          ),
+        );
+        break;
+      case 'menor que':
+        setFilteredPlanets(
+          filteredPlanets.filter(
+            (planet: any) => Number(planet[column]) < Number(value),
+          ),
+        );
+        break;
+      case 'igual a':
+        setFilteredPlanets(
+          filteredPlanets.filter(
+            (planet: any) => Number(planet[column]) === Number(value),
+          ),
+        );
+        break;
+      default:
+        break;
+    }
+  };
+
+  useEffect(() => {
+    if (filterByNumericValues.length === 0) return;
+    setNumericFilter(filterByNumericValues[filterByNumericValues.length - 1]);
+  }, [filterByNumericValues]);
+
   const context = {
     allPlanets,
     filteredPlanets,
@@ -38,6 +73,7 @@ function PlanetsProvider({ children }: PlanetsProviderProps) {
     setFilteredPlanets,
     setColumnsToUse,
     setFilterByNumericValues,
+    setNumericFilter,
   };
 
   return (
