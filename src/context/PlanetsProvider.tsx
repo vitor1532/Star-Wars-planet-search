@@ -8,18 +8,22 @@ type PlanetsProviderProps = {
 };
 
 function PlanetsProvider({ children }: PlanetsProviderProps) {
-  const [planets, setPlanets] = useState<Planet[]>([]);
+  const [allPlanets, setAllPlanets] = useState<Planet[]>([]);
+  const [filteredPlanets, setFilteredPlanets] = useState<Planet[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchPlanets();
-      setPlanets(data);
+      setAllPlanets(data);
+      setFilteredPlanets(data);
     };
     fetchData();
   }, []);
 
+  const context = { allPlanets, filteredPlanets, setFilteredPlanets };
+
   return (
-    <PlanetsContext.Provider value={ { planets } }>
+    <PlanetsContext.Provider value={ context }>
       {children}
     </PlanetsContext.Provider>
   );

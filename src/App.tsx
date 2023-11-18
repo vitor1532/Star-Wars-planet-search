@@ -1,10 +1,12 @@
 import './App.css';
+import NameFilter from './components/NameFilter';
 import Table from './components/Table';
 
 function App() {
   return (
     <>
-      <span>Hello, App!!</span>
+      <h1>Projeto Star Wars - Trybe</h1>
+      <NameFilter />
       <Table />
     </>
   );

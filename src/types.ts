@@ -16,5 +16,10 @@ export type Planet = {
 };
 
 export type PlanetsContextType = {
-  planets: Planet[],
+  allPlanets: Planet[],
+  filteredPlanets: Planet[],
+  setFilteredPlanets: (planets: Planet[]) => void,
 };
+
+export type ReactChangeEvent = React.
+  ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>;

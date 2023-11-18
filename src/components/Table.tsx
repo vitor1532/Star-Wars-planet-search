@@ -4,13 +4,13 @@ import snakeCaseToTitleCase from '../utils/TitleCase';
 import '../styles/Table.css';
 
 function Table() {
-  const { planets } = useContext(PlanetsContext);
+  const { filteredPlanets } = useContext(PlanetsContext);
 
   return (
     <table>
       <thead>
         <tr>
-          {planets.length > 0 && Object.keys(planets[0]).map((key) => {
+          {filteredPlanets.length > 0 && Object.keys(filteredPlanets[0]).map((key) => {
             if (key === 'residents') {
               return null;
             } const title = snakeCaseToTitleCase(key);
@@ -19,7 +19,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {planets.map(({
+        {filteredPlanets.map(({
           name,
           rotation_period,
           orbital_period,
