@@ -1,17 +1,14 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import snakeCaseToTitleCase from '../utils/titleCase';
 
 function DisplayNumericFilters() {
   const { filterByNumericValues } = useContext(PlanetsContext);
 
-  useEffect(() => {
-    console.log(filterByNumericValues);
-  }, [filterByNumericValues]);
-
   return (
     <>
       {filterByNumericValues.map((filter) => (
-        <div key={ filter.column }>
+        <div key={ snakeCaseToTitleCase(filter.column) }>
           <span>{`${filter.column} ${filter.comparison} ${filter.value}`}</span>
           <button>x</button>
         </div>

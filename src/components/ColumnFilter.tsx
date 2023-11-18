@@ -1,23 +1,31 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { NumericFilter, ReactChangeEvent } from '../types';
 import PlanetsContext from '../context/PlanetsContext';
 
 const comparisons = ['maior que', 'menor que', 'igual a'];
 
+const INITIAL_FORM = {
+  column: 'population',
+  comparison: 'maior que',
+  value: '0',
+};
+
 function ColumnFilter() {
   const {
-    // filteredPlanets,
     columnsToUse,
     filterByNumericValues,
-    // setFilteredPlanets,
-    // setColumnsToUse,
+    setColumnsToUse,
     setFilterByNumericValues,
   } = useContext(PlanetsContext);
-  const [formInfo, setFormInfo] = useState<NumericFilter>({
-    column: 'population',
-    comparison: 'maior que',
-    value: '0',
-  });
+  const [formInfo, setFormInfo] = useState<NumericFilter>(INITIAL_FORM);
+
+  useEffect(() => {
+    if (filterByNumericValues.length === 0) return;
+    const newColumnsToUse = columnsToUse.filter((column) => column !== formInfo.column);
+
+    setColumnsToUse(newColumnsToUse);
+    setFormInfo({ ...INITIAL_FORM, column: newColumnsToUse[0] });
+  }, [filterByNumericValues]);
 
   function handleChange(event: ReactChangeEvent) {
     const { id, value } = event.target;
@@ -26,11 +34,19 @@ function ColumnFilter() {
       ...formInfo,
       [id]: value,
     });
+
+    console.log(formInfo);
   }
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    setFilterByNumericValues([...filterByNumericValues, formInfo]);
+    const columnExists = filterByNumericValues.some(
+      (filter) => filter.column === formInfo.column,
+    );
+
+    if (!columnExists) {
+      setFilterByNumericValues([...filterByNumericValues, formInfo]);
+    }
   }
 
   return (

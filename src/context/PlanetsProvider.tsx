@@ -31,33 +31,26 @@ function PlanetsProvider({ children }: PlanetsProviderProps) {
   }, []);
 
   const setNumericFilter = (filter: NumericFilter) => {
-    const { column, comparison, value } = filter;
+    setFilteredPlanets((prevFilteredPlanets) => {
+      const { column, comparison, value } = filter;
 
-    switch (comparison) {
-      case 'maior que':
-        setFilteredPlanets(
-          filteredPlanets.filter(
+      switch (comparison) {
+        case 'maior que':
+          return prevFilteredPlanets.filter(
             (planet: any) => Number(planet[column]) > Number(value),
-          ),
-        );
-        break;
-      case 'menor que':
-        setFilteredPlanets(
-          filteredPlanets.filter(
+          );
+        case 'menor que':
+          return prevFilteredPlanets.filter(
             (planet: any) => Number(planet[column]) < Number(value),
-          ),
-        );
-        break;
-      case 'igual a':
-        setFilteredPlanets(
-          filteredPlanets.filter(
+          );
+        case 'igual a':
+          return prevFilteredPlanets.filter(
             (planet: any) => Number(planet[column]) === Number(value),
-          ),
-        );
-        break;
-      default:
-        break;
-    }
+          );
+        default:
+          return prevFilteredPlanets;
+      }
+    });
   };
 
   useEffect(() => {
