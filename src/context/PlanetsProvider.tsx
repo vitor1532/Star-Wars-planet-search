@@ -76,15 +76,15 @@ function PlanetsProvider({ children }: PlanetsProviderProps) {
   };
 
   const orderPlanets = (column: keyof Planet, sort: string) => {
-    setFilteredPlanets((prevFilteredPlanets) => {
-      const sortedPlanets = [...prevFilteredPlanets].sort((a, b) => {
-        if (sort === 'ASC') {
-          return Number(a[column]) - Number(b[column]);
-        }
-        return Number(b[column]) - Number(a[column]);
-      });
-      return sortedPlanets;
+    const last = 'unknown';
+    const sortedPlanets = [...filteredPlanets].sort((a, b) => {
+      if (a[column] !== last && b[column] === last) {
+        return sort === 'ASC' ? -1 : 1;
+      }
+      return sort === 'ASC' ? Number(a[column]) - Number(b[column])
+        : Number(b[column]) - Number(a[column]);
     });
+    setFilteredPlanets(sortedPlanets);
   };
 
   useEffect(() => {
