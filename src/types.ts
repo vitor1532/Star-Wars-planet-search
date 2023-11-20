@@ -38,6 +38,7 @@ export type PlanetsContextType = {
   setNumericFilter: (filter: NumericFilter) => void,
   removeNumericFilter: (filterToRemove: NumericFilter) => void,
   setOperation: (operation: OperationType) => void,
+  setFilterByOrder: (filter: OrderFilterType) => void,
 };
 
 export type ReactChangeEvent = React.

@@ -75,6 +75,24 @@ function PlanetsProvider({ children }: PlanetsProviderProps) {
     );
   };
 
+  const orderPlanets = (column: keyof Planet, sort: string) => {
+    setFilteredPlanets((prevFilteredPlanets) => {
+      const sortedPlanets = [...prevFilteredPlanets].sort((a, b) => {
+        if (sort === 'ASC') {
+          return Number(a[column]) - Number(b[column]);
+        }
+        return Number(b[column]) - Number(a[column]);
+      });
+      return sortedPlanets;
+    });
+  };
+
+  useEffect(() => {
+    const { column, sort } = filterByOrder;
+
+    orderPlanets(column as keyof Planet, sort);
+  }, [filterByOrder]);
+
   const context = {
     allPlanets,
     filteredPlanets,
@@ -86,6 +104,7 @@ function PlanetsProvider({ children }: PlanetsProviderProps) {
     setNumericFilter,
     removeNumericFilter,
     setOperation,
+    setFilterByOrder,
   };
 
   return (
