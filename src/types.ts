@@ -20,6 +20,11 @@ export type NumericFilter = {
   value: string,
 };
 
+export type OrderFilterType = {
+  column: string,
+  sort: string,
+};
+
 export type OperationType = 'addFilter' | 'removeFilter';
 
 export type PlanetsContextType = {

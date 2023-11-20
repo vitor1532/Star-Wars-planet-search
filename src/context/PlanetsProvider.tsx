@@ -1,25 +1,20 @@
 import { useEffect, useState } from 'react';
-import { NumericFilter, OperationType, Planet } from '../types';
+import { NumericFilter, OperationType, OrderFilterType, Planet } from '../types';
 import { fetchPlanets } from '../apis/StarWarsApi';
 import PlanetsContext from './PlanetsContext';
+import columns from '../utils/columns';
 
 type PlanetsProviderProps = {
   children: React.ReactNode;
 };
-
-const columns = [
-  'population',
-  'orbital_period',
-  'diameter',
-  'rotation_period',
-  'surface_water',
-];
 
 function PlanetsProvider({ children }: PlanetsProviderProps) {
   const [allPlanets, setAllPlanets] = useState<Planet[]>([]);
   const [filteredPlanets, setFilteredPlanets] = useState<Planet[]>([]);
   const [columnsToUse, setColumnsToUse] = useState<string[]>(columns);
   const [filterByNumericValues, setFilterByNumericValues] = useState<NumericFilter[]>([]);
+  const [filterByOrder, setFilterByOrder] = useState<OrderFilterType>({
+    column: 'start', sort: 'start' });
   const [operation, setOperation] = useState<OperationType>('addFilter');
 
   useEffect(() => {
