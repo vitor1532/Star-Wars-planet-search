@@ -1,7 +1,11 @@
 import {vi} from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import App from '../App';
 import PlanetsProvider from '../context/PlanetsProvider';
+import fullMock from '../utils/mockData';
+
+let snakeCase = (str: string) => str.toLowerCase().replace(/ /g, '_');
+let titleCase = (str: string) => str.toLowerCase().replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
 
 describe('Testa a renderização de todos os componentes da aplicação', () => {
 
@@ -34,63 +38,73 @@ describe('Testa a renderização de todos os componentes da aplicação', () => 
     expect(columnSortDesc).toBeInTheDocument();
   })
 
-  // Renderiza a tabela com os dados da API e verifica se ela foi chamada uma vez
-  // test('Verifica se a API chamada uma vez', async () => {
-  //     const planetData = [
-  //       {
-  //         "name": "Alderaan", 
-  //         "rotation_period": "24", 
-  //         "orbital_period": "364", 
-  //         "diameter": "12500", 
-  //         "climate": "temperate", 
-  //         "gravity": "1 standard", 
-  //         "terrain": "grasslands, mountains", 
-  //         "surface_water": "40", 
-  //         "population": "2000000000", 
-  //         "residents": [
-  //           "https://swapi-trybe.herokuapp.com/api/people/5/", 
-  //           "https://swapi-trybe.herokuapp.com/api/people/68/", 
-  //           "https://swapi-trybe.herokuapp.com/api/people/81/"
-  //         ], 
-  //         "films": [
-  //           "https://swapi-trybe.herokuapp.com/api/films/6/", 
-  //           "https://swapi-trybe.herokuapp.com/api/films/1/"
-  //         ], 
-  //         "created": "2014-12-10T11:35:48.479000Z", 
-  //         "edited": "2014-12-20T20:58:18.420000Z", 
-  //         "url": "https://swapi-trybe.herokuapp.com/api/planets/2/"
-  //       }
-  //     ]
+  test('testa funções title e snake case', () => {
+    const snake = 'snake_case';
+    const title = 'Title Case';
+    snakeCase = vi.fn().mockReturnValue(snake);
+    titleCase = vi.fn().mockReturnValue(title);
 
-  //   const apiResponse = {
-  //     ok: true,
-  //     status: 200,
-  //     results: async () => planetData
-  //   };
-
-  //   const mockFetch = vi.spyOn(global, 'fetch').mockResolvedValue(apiResponse as any);
-
-  //   render(
-  //     <PlanetsProvider>
-  //       <App />
-  //     </PlanetsProvider>
-  //     );
-
-  //   const table = screen.getByRole('table');
-
-  //   await waitFor(() => {
-  //     expect(mockFetch).toHaveBeenCalledTimes(1);
-  //   });
-
-  //   // Wait for the table to be filled
-  //   await waitFor(() => {
-  //     const cellValue = screen.getByText(/Alderaan/i);
-  //     expect(cellValue).toBeInTheDocument();
-  //   });
     
-  //   expect(table).toBeInTheDocument();
+    expect(snakeCase).not.toHaveBeenCalled();
+    expect(titleCase).not.toHaveBeenCalled();
 
+
+    expect(snakeCase(title)).toBe(snake);
+    expect(titleCase(snake)).toBe(title);
+
+    expect(snakeCase).toHaveBeenCalled();
+    expect(titleCase).toHaveBeenCalled();
+
+  });
+
+  test('Verifica se a API chamada uma vez', async () => {
+
+
+    const apiResponse = {
+      ok: true,
+      status: 200,
+      json: async () => fullMock
+    } as Response;
+
+    const mockFetch = vi.spyOn(global, 'fetch').mockResolvedValue(apiResponse);
+
+    render(
+      <PlanetsProvider>
+        <App />
+      </PlanetsProvider>
+      );
+
+    const table = screen.getByRole('table');
+    const select = screen.getByTestId('column-filter');
+    expect(table).toBeInTheDocument();
+
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+    expect(mockFetch).toHaveBeenCalledWith('https://swapi.dev/api/planets');
+
+    expect(select).toBeInTheDocument();
+    expect(select).toHaveValue('population');
+
+    fireEvent.change(select, { target: { value: 'orbital_period' } });
+
+    expect(select).toHaveValue('orbital_period');
+
+    const cellValue = await screen.findByText(/Alderaan/i);
+    expect(cellValue).toBeInTheDocument();
+    
+    expect(table).toContainHTML('<th>Name</th>');
+    expect(table).toContainHTML('<th>Rotation Period</th>');
+    expect(table).toContainHTML('<th>Orbital Period</th>');
+    expect(table).toContainHTML('<th>Diameter</th>');
+    expect(table).toContainHTML('<th>Climate</th>');
+    expect(table).toContainHTML('<th>Gravity</th>');
+    expect(table).toContainHTML('<th>Terrain</th>');
+    expect(table).toContainHTML('<th>Surface Water</th>');
+    expect(table).toContainHTML('<th>Population</th>');
+    expect(table).toContainHTML('<th>Films</th>');
+    expect(table).toContainHTML('<th>Created</th>');
+    expect(table).toContainHTML('<th>Edited</th>');
+    expect(table).toContainHTML('<th>Url</th>');
       
-  // })
+  })
 
 });
