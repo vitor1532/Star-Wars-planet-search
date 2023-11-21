@@ -154,6 +154,24 @@ describe('Testa a renderização de todos os componentes da aplicação', () => 
       fireEvent.click(removeFilterBtn[0]);
 
       expect(filterDisplay[0]).not.toBeInTheDocument();
+
+      fireEvent.change(select, { target: { value: 'population' } });
+      fireEvent.change(comparison, { target: { value: 'maior que' } });
+      fireEvent.change(value, { target: { value: '2000' } });
+
+      fireEvent.click(btn);
+
+      const newNames2 = await screen.findAllByTestId('planet-name');
+      const filterDisplay2 = await screen.findAllByTestId('filter');
+
+      expect(newNames2).toHaveLength(5);
+      expect(filterDisplay2[0]).toHaveTextContent('population maior que 2000');
+
+      const removeFiltersBtn = screen.getByTestId('button-remove-filters');
+
+      fireEvent.click(removeFiltersBtn);
+
+      expect(filterDisplay[0]).not.toBeInTheDocument();
   });
 
   test('Testa a filtragem por ordem ascendente e descendente', async () => {
@@ -193,6 +211,37 @@ describe('Testa a renderização de todos os componentes da aplicação', () => 
       const descNames = await screen.findAllByTestId('planet-name');
 
       expect(descNames[0]).toHaveTextContent('Naboo');
+  });
+
+  test('testa o name Filter', async () => {
+    const apiResponse = {
+      ok: true,
+      status: 200,
+      json: async () => fullMock
+    } as Response;
+
+    const mockFetch = vi.spyOn(global, 'fetch').mockResolvedValue(apiResponse);
+
+    render(
+      <PlanetsProvider>
+        <App />
+      </PlanetsProvider>
+      );
+
+      const input = screen.getByTestId('name-filter');
+      const names = await screen.findAllByTestId('planet-name');
+
+      expect(names[0]).toHaveTextContent('Tatooine');
+      expect(names[1]).toHaveTextContent('Alderaan');
+      expect(names).toHaveLength(8);
+
+      fireEvent.change(input, { target: { value: 'oo' } });
+
+      const newNames = await screen.findAllByTestId('planet-name');
+
+      expect(newNames).toHaveLength(2);
+      expect(newNames[0]).toHaveTextContent('Tatooine');
+      expect(newNames[1]).toHaveTextContent('Naboo');
   });
 
 });
