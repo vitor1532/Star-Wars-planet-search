@@ -104,7 +104,95 @@ describe('Testa a renderização de todos os componentes da aplicação', () => 
     expect(table).toContainHTML('<th>Created</th>');
     expect(table).toContainHTML('<th>Edited</th>');
     expect(table).toContainHTML('<th>Url</th>');
-      
   })
+
+  test('Testa o componente DisplayNumericFilters', async () => {
+    const apiResponse = {
+      ok: true,
+      status: 200,
+      json: async () => fullMock
+    } as Response;
+
+    const mockFetch = vi.spyOn(global, 'fetch').mockResolvedValue(apiResponse);
+
+    render(
+      <PlanetsProvider>
+        <App />
+      </PlanetsProvider>
+      );
+
+      const select = screen.getByTestId('column-filter');
+      const comparison = screen.getByTestId('comparison-filter');
+      const value = screen.getByTestId('value-filter');
+      const btn = screen.getByTestId('button-filter');
+      const names = await screen.findAllByTestId('planet-name');
+
+      fireEvent.change(select, { target: { value: 'orbital_period' } });
+      fireEvent.change(comparison, { target: { value: 'maior que' } });
+      fireEvent.change(value, { target: { value: '400' } });
+
+      expect(names[0]).toHaveTextContent('Tatooine');
+      expect(select).toHaveValue('orbital_period');
+      expect(comparison).toHaveValue('maior que');
+      expect(value).toHaveValue(400);
+
+      fireEvent.click(btn);
+
+      const newNames = await screen.findAllByTestId('planet-name');
+      const filterDisplay = await screen.findAllByTestId('filter');
+      const removeFilterBtn = await screen.findAllByTestId('remove-single-filter');
+
+      expect(newNames).toHaveLength(4);
+      expect(newNames[0]).toHaveTextContent('Yavin IV');
+
+      expect(filterDisplay).toHaveLength(1);
+      expect(filterDisplay[0]).toHaveTextContent('orbital_period maior que 400');
+
+      expect(removeFilterBtn).toHaveLength(1);
+      expect(removeFilterBtn[0]).toBeInTheDocument();
+
+      fireEvent.click(removeFilterBtn[0]);
+
+      expect(filterDisplay[0]).not.toBeInTheDocument();
+  });
+
+  test('Testa a filtragem por ordem ascendente e descendente', async () => {
+    const apiResponse = {
+      ok: true,
+      status: 200,
+      json: async () => fullMock
+    } as Response;
+
+    const mockFetch = vi.spyOn(global, 'fetch').mockResolvedValue(apiResponse);
+
+    render(
+      <PlanetsProvider>
+        <App />
+      </PlanetsProvider>
+      );
+
+      const select = screen.getByTestId('column-sort');
+      const asc = screen.getByTestId('column-sort-input-asc');
+      const desc = screen.getByTestId('column-sort-input-desc');
+      const btn = screen.getByTestId('column-sort-button');
+      const names = await screen.findAllByTestId('planet-name');
+
+      expect(names[0]).toHaveTextContent('Tatooine');
+
+      fireEvent.change(select, { target: { value: 'population' } });
+      fireEvent.click(asc);
+      fireEvent.click(btn);
+
+      const ascNames = await screen.findAllByTestId('planet-name');
+
+      expect(ascNames[0]).toHaveTextContent('Yavin IV');
+
+      fireEvent.click(desc);
+      fireEvent.click(btn);
+
+      const descNames = await screen.findAllByTestId('planet-name');
+
+      expect(descNames[0]).toHaveTextContent('Naboo');
+  });
 
 });

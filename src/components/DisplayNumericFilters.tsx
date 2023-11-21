@@ -27,7 +27,12 @@ function DisplayNumericFilters() {
       {filterByNumericValues.map((filter) => (
         <div data-testid="filter" key={ snakeCaseToTitleCase(filter.column) }>
           <span>{`${filter.column} ${filter.comparison} ${filter.value}`}</span>
-          <button onClick={ () => handleRemoveFilter(filter) }>x</button>
+          <button
+            data-testid="remove-single-filter"
+            onClick={ () => handleRemoveFilter(filter) }
+          >
+            x
+          </button>
         </div>
       ))}
       <button
