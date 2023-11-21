@@ -14,7 +14,7 @@ function Table() {
             if (key === 'residents') {
               return null;
             } const title = snakeCaseToTitleCase(key);
-            return <th key={ key }>{title}</th>;
+            return <th data-testid="table-head" key={ key }>{title}</th>;
           })}
         </tr>
       </thead>
