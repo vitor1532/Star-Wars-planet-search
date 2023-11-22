@@ -1,0 +1,16 @@
+.filter-wrappers {
+  align-items: center;
+  border: 1px solid white;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  padding: 45px;
+  margin-bottom: 15px;
+}
+
+.numbers-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 60px;
+}

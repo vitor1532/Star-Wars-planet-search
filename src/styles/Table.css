@@ -1,20 +1,31 @@
-table {
-  border-collapse: collapse;
-  font-size: 0.8em;
-  margin-bottom: 20px;
-  max-width: 100%;
+.outter-wrapper {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 10px;
 }
 
-th, td {
-  border: 1px solid #ddd;
-  padding: 10px;
+.table-wrapper {
+  overflow-x: scroll;
+}
+
+table {
+  border-collapse: collapse;
+  border-radius: 5px 5px 0 0;
+  font-size: 0.8em;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+thead tr {
+  background-color: #373A40;
+  color: #fff;
+  font-weight: bold;
   text-align: left;
 }
 
-tr:nth-child( even ) {
-  background-color: #f2f2f2;
-}
-
-tr:hover {
-  background-color: #ddd;
+th, td {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
 }
