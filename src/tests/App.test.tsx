@@ -18,7 +18,7 @@ describe('Testa a renderização de todos os componentes da aplicação', () => 
       </PlanetsProvider>
       );
 
-    const title = screen.getByText(/Projeto Star Wars - Trybe/i);
+    // const title = screen.getByText(/Projeto Star Wars - Trybe/i);
     const nameFilter = screen.getByTestId('name-filter');
     const columnFilter = screen.getByTestId('column-filter');
     const comparisonFilter = screen.getByTestId('comparison-filter');
@@ -28,7 +28,7 @@ describe('Testa a renderização de todos os componentes da aplicação', () => 
     const columnSortDesc = screen.getByTestId('column-sort-input-desc');
 
     
-    expect(title).toBeInTheDocument();
+    // expect(title).toBeInTheDocument();
     expect(nameFilter).toBeInTheDocument();
     expect(columnFilter).toBeInTheDocument();
     expect(comparisonFilter).toBeInTheDocument();

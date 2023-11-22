@@ -6,13 +6,14 @@ import Table from './components/Table';
 import PlanetsContext from './context/PlanetsContext';
 import DisplayNumericFilters from './components/DisplayNumericFilters';
 import OrderFilter from './components/OrderFilter';
+import Header from './components/Header';
 
 function App() {
   const { filterByNumericValues } = useContext(PlanetsContext);
 
   return (
     <>
-      <h1>Projeto Star Wars - Trybe</h1>
+      <Header />
       <NameFilter />
       <ColumnFilter />
       <OrderFilter />
