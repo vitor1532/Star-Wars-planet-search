@@ -1,0 +1,16 @@
+.name-filter {
+  background: transparent;
+  border: 1px solid white;
+  border-radius: 10px;
+  color: white;
+  font-weight: 700;
+  line-height: 1.5;
+  padding: 10px;
+  width: 1000px;
+}
+
+.name-filter::placeholder {
+  color: rgba(255, 255, 255, 0.678);
+  font-weight: 500;
+  text-align: center;
+}

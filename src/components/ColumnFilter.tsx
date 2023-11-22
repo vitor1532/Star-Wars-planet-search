@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { NumericFilter, ReactChangeEvent } from '../types';
 import PlanetsContext from '../context/PlanetsContext';
+import '../styles/ColumnFilter.css';
 
 const comparisons = ['maior que', 'menor que', 'igual a'];
 
@@ -50,39 +51,51 @@ function ColumnFilter() {
 
   return (
     <form onSubmit={ handleSubmit }>
-      <label htmlFor="column">Coluna</label>
-      <select
-        id="column"
-        value={ formInfo.column }
-        onChange={ handleChange }
-        data-testid="column-filter"
-      >
-        {columnsToUse.map((key) => (
-          <option key={ key }>{ key }</option>
-        ))}
-      </select>
+      <div className="label-wrapper">
+        <label htmlFor="column">Coluna</label>
+        <select
+          id="column"
+          value={ formInfo.column }
+          onChange={ handleChange }
+          data-testid="column-filter"
+        >
+          {columnsToUse.map((key) => (
+            <option key={ key }>{ key }</option>
+          ))}
+        </select>
+      </div>
 
-      <label htmlFor="comparison">Operador</label>
-      <select
-        id="comparison"
-        value={ formInfo.comparison }
-        onChange={ handleChange }
-        data-testid="comparison-filter"
-      >
-        {comparisons.map((comparison) => (
-          <option key={ comparison }>{ comparison }</option>
-        ))}
-      </select>
+      <div className="label-wrapper">
+        <label htmlFor="comparison">Operador</label>
+        <select
+          id="comparison"
+          value={ formInfo.comparison }
+          onChange={ handleChange }
+          data-testid="comparison-filter"
+        >
+          {comparisons.map((comparison) => (
+            <option key={ comparison }>{ comparison }</option>
+          ))}
+        </select>
+      </div>
 
-      <label htmlFor="value">Valor</label>
-      <input
-        id="value"
-        type="number"
-        value={ formInfo.value }
-        onChange={ handleChange }
-        data-testid="value-filter"
-      />
-      <button data-testid="button-filter" type="submit">Filtrar</button>
+      <div className="label-wrapper">
+        <label htmlFor="value">Valor</label>
+        <input
+          id="value"
+          type="number"
+          value={ formInfo.value }
+          onChange={ handleChange }
+          data-testid="value-filter"
+        />
+      </div>
+      <button
+        className="button-filter"
+        data-testid="button-filter"
+        type="submit"
+      >
+        Filtrar
+      </button>
     </form>
   );
 }

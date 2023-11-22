@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import { ReactChangeEvent } from '../types';
+import '../styles/NameFilter.css';
 
 function NameFilter() {
   const [nameInfo, setNameInfo] = useState('');
@@ -26,6 +27,7 @@ function NameFilter() {
         data-testid="name-filter"
         type="text"
         placeholder="Pesquisar por nome"
+        className="name-filter"
         value={ nameInfo }
         onChange={ handleChange }
       />

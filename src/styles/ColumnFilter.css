@@ -1,0 +1,58 @@
+form {
+  display: flex;
+}
+
+.label-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-right: 15px;
+}
+
+.label-wrapper label {
+  margin-bottom: 5px;
+  margin-right: 50px;
+}
+
+.label-wrapper select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid white;
+  color: white;
+  margin-top: 15px;
+  padding: 5px;
+  width: 100%;
+}
+
+.label-wrapper select option {
+  background: #222;
+  color: white;
+}
+
+.label-wrapper input {
+  background: transparent;
+  border: 1px solid white;
+  border-radius: 10px;
+  color: white;
+  font-weight: 700;
+  line-height: 1.5;
+  padding: 10px;
+}
+
+.button-filter {
+  background: transparent;
+  border: 1px solid #fcc419;
+  border-radius: 10px;
+  color: #fcc419;
+  cursor: pointer;
+  height: 2.5rem;
+  margin-top: 25px;
+}
+
+.button-filter:hover {
+  background: #fcc419;
+  color: #222;
+  transition: 1s;
+}
