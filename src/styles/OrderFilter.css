@@ -1,0 +1,55 @@
+form {
+  display: flex;
+  margin-left: 20px;
+}
+
+.order-container label {
+  margin-bottom: 5px;
+  margin-right: 50px;
+}
+
+.order-container select {
+  appearance: none;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid white;
+  color: white;
+  margin-top: 15px;
+  padding: 5px;
+  width: 100%;
+}
+
+.order-container select option {
+  background: #222;
+  color: white;
+}
+
+.sort-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 20px;
+}
+
+.sort-container label {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  user-select: none;
+}
+
+.sort-container input {
+  appearance: none;
+  border: 2px solid #333;
+  border-radius: 50%;
+  height: 16px;
+  margin-right: 5px;
+  outline: none;
+  transition: background-color 0.3s, border-color 0.3s;
+  width: 16px;
+}
+
+.sort-container input:checked {
+  background-color: #fcc419;
+  border-color: #fcc419;
+}

@@ -38,19 +38,3 @@ form {
   line-height: 1.5;
   padding: 10px;
 }
-
-.button-filter {
-  background: transparent;
-  border: 1px solid #fcc419;
-  border-radius: 10px;
-  color: #fcc419;
-  cursor: pointer;
-  height: 2.5rem;
-  margin-top: 25px;
-}
-
-.button-filter:hover {
-  background: #fcc419;
-  color: #222;
-  transition: 1s;
-}

@@ -6,6 +6,23 @@ body {
   color: white;
 }
 
+button {
+  background: transparent;
+  border: 1px solid #fcc419;
+  border-radius: 10px;
+  color: #fcc419;
+  cursor: pointer;
+  height: 2.5rem;
+  margin-top: 25px;
+}
+
+button:hover {
+  background: #fcc419;
+  color: #222;
+  transition: 1s;
+}
+
+
 ::-webkit-scrollbar {
   width: 12px;
 }
