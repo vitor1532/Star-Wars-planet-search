@@ -7,6 +7,7 @@ import PlanetsContext from './context/PlanetsContext';
 import DisplayNumericFilters from './components/DisplayNumericFilters';
 import OrderFilter from './components/OrderFilter';
 import Header from './components/Header';
+import './styles/FilterWrapper.css';
 
 function App() {
   const { filterByNumericValues } = useContext(PlanetsContext);
@@ -14,12 +15,16 @@ function App() {
   return (
     <>
       <Header />
-      <NameFilter />
-      <ColumnFilter />
-      <OrderFilter />
-      {filterByNumericValues.length > 0 && (
-        <DisplayNumericFilters />
-      )}
+      <div className="filter-wrappers">
+        <NameFilter />
+        <div className="numbers-wrapper">
+          <ColumnFilter />
+          <OrderFilter />
+        </div>
+        {filterByNumericValues.length > 0 && (
+          <DisplayNumericFilters />
+        )}
+      </div>
       <Table />
     </>
   );
