@@ -14,8 +14,6 @@ form {
 }
 
 .label-wrapper select {
-  /* --webkit-appearance: none; */
-  /* --moz-appearance: none; */
   appearance: none;
   background: transparent;
   border: none;
