@@ -4,8 +4,8 @@
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  padding: 45px;
   margin-bottom: 15px;
+  padding: 45px;
 }
 
 .numbers-wrapper {
