@@ -45,7 +45,7 @@ form {
   height: 16px;
   margin-right: 5px;
   outline: none;
-  transition: background-color 0.3s, border-color 0.3s;
+  transition: background-color 0.3s , border-color 0.3s;
   width: 16px;
 }
 
